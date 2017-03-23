@@ -1,3 +1,6 @@
+import { LimsAdminComponent } from './lims-admin/lims-admin.component';
+import { LimsUserComponent } from './lims-user/lims-user.component'; 
+
 import { Http } from '@angular/http';
 import { NgModule, ErrorHandler, Component } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -11,8 +14,15 @@ import {AcknowledgementPage} from '../pages/acknowledgement/acknowledgement';
 import {RecommendationPage} from '../pages/recommendation/recommendation';
 import {WishListPage} from '../pages/wishList/wishList';
 import {FilterPage} from '../pages/filter/filter';
-import { LimsAdminComponent } from './lims-admin/lims-admin.component';
-import { LimsUserComponent } from './lims-user/lims-user.component'; 
+import { Search } from '../providers/search.service';
+
+
+import { AdminHomeBodyService} from '../providers/admin-home-body.service';
+import { HomeBodyService } from '../providers/home-body.service';
+
+import {AdalService} from 'ng2-adal/core';
+import {Authenticate} from '../providers/authenticate';
+import { APP_BASE_HREF,HashLocationStrategy,LocationStrategy } from '@angular/common';
 
 
 @NgModule({
@@ -32,12 +42,13 @@ import { LimsUserComponent } from './lims-user/lims-user.component';
 
   ],
   imports: [
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp)
     
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    LimsUserComponent,
     SearchPage,
     HelpPage,
     NotificationPage,
@@ -46,11 +57,10 @@ import { LimsUserComponent } from './lims-user/lims-user.component';
      RecommendationPage,
     WishListPage,
     AcknowledgementPage,
-    FilterPage,
-    LimsUserComponent,
+    FilterPage,    
     LimsAdminComponent
 
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},AdminHomeBodyService,HomeBodyService,Authenticate,Search,AdalService,{provide: APP_BASE_HREF, useValue: '/'}]
 })
 export class AppModule {}
